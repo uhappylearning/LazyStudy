@@ -415,12 +415,22 @@ function main() {
     start_app();//启动app
     var start = new Date().getTime();//程序开始时间
     var myScores = null;
-    while (!myScores) {
-        console.log("开始点击 我的积分");
-        id("comm_head_xuexi_score").findOne().click();//点击我的积分
-        delay(3);
-        myScores = getScores();
-    }
+    console.log("开始点击 我的积分");
+    do {
+        // if(id("comm_head_xuexi_score").exists()){
+        //     id("comm_head_xuexi_score").findOnce().click();//点击我的积分
+        // }else if(text("积分").exists()){
+        //     text("积分").findOnce().click();
+        // }else{
+        className("RelativeLayout").findOnce().child(0).child(0).child(0).child(0).child(2).child(1).click();//为了兼容打包版，js版不用这么丑
+        //}
+        delay(2);
+        if (!text("积分明细").exists()) {
+            console.log("未找到我的积分！");
+        }
+        delay(2);
+    } while (!text("积分明细").exists());
+    myScores = getScores();
     back();//返回主界面
     delay(3);
     if (myScores["本地频道"][0].toString() == "0") {//本地频道分未得
