@@ -52,21 +52,21 @@ function doChallengeAnswer() {
     ansSearchArray = tikuCommon.searchTiku(_timu);
     if (ansSearchArray.length == 0) { //tiku表中没有，搜索网络表
         ansSearchArray = tikuCommon.searchNet(_timu);
-    }else{
+    }else{//tiku表中有
         answerArray = ansSearchArray;
     }
 
     if (ansSearchArray.length == 0) { //网络中也没有，随机
         let randomIndex = random(0, ansTimu.length - 1);
         answerArray.push({ "question": _timu, "answer": ansTimu[randomIndex] });
-    }else{
+    }else{//tikuNet表中有
         answerArray = ansSearchArray;
     }
 
     var answer = "";
     //对答案数组逐项点击
     for (var i = 0, len = answerArray.length; i < len; i++) {
-        answer = answerArray[i].answer;
+        answer = answerArray[i].answer.replace(/(^\s*)|(\s*$)/g, "");//去除前后空格，解决历史遗留问题
         if (/^[a-zA-Z]{1}$/.test(answer)) { //如果为ABCD形式
             var indexAns = tikuCommon.indexFromChar(answer.toUpperCase());
             answer = ansTimu[indexAns];
@@ -85,7 +85,9 @@ function doChallengeAnswer() {
                 //显示 对号
                 var b = item.child(0).bounds();
                 var tipsWindow = drawfloaty(b.left, b.top);
-                sleep(300);
+                //随机时长点击
+                var delayTime=(parseInt(Math.random()*5,10)+1)*100;
+                sleep(300+delayTime);
                 //点击
                 item.child(0).click();
                 hasClicked = true;

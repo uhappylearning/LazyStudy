@@ -22,7 +22,7 @@ function searchDb(keyw, _tableName, queryStr) {
     var db = SQLiteDatabase.openOrCreateDatabase(path, null);
     var query = "";
     if (queryStr == "") {
-        query = "SELECT question,answer FROM " + tableName + " WHERE question LIKE '%" + keyw + "%'";
+        query = "SELECT question,answer FROM " + tableName + " WHERE question LIKE '" + keyw + "%'";//前缀匹配
     } else {
         query = queryStr;
     }
@@ -79,5 +79,8 @@ exports.searchNet = searchNet;
 exports.searchDb = searchDb;
 exports.indexFromChar = indexFromChar;
 exports.executeSQL = executeSQL;
+
+
+
 
 

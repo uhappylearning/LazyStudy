@@ -187,7 +187,7 @@ function doAnswer() {
     
 
     //获取答案
-    var answer = ansTiku;
+    var answer = ansTiku.replace(/(^\s*)|(\s*$)/g, "");//去除前后空格，解决历史遗留问题
     //toastLog("answer=" + answer);
     if (descStartsWith("填空题").exists()) {
         //toastLog("填空题");

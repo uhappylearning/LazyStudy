@@ -1,6 +1,5 @@
 //toastLog(" 请在无障碍中选择本 APP");
 auto.waitFor();
-let waysOfShopping = 0;
 
 let window = floaty.window(
     <vertical>
@@ -17,7 +16,7 @@ let window = floaty.window(
 
 let deviceWidth = device.width;
 let deviceHeight = device.height;
-window.setPosition(deviceWidth * 0.6, deviceHeight*0.25);
+window.setPosition(deviceWidth * 0.7, deviceHeight*0.4);
 setInterval(() => {
 }, 1000);
 

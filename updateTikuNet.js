@@ -39,7 +39,7 @@ function CreateAndInsert(liArray){
         //log("题目："+li.text());
         var liText = liArray.get(li).text();
         var timuPos=liText.indexOf("】")+1;
-        var tiMu=liText.substring(timuPos).replace("_", "");
+        var tiMu=liText.substring(timuPos).replace(/_/g, "");
         var daAn = liArray.get(li).select("b").first().text();
         log(util.format("题目:%s\n答案:%s"),tiMu,daAn);
         stmt.bindString(1, tiMu);
