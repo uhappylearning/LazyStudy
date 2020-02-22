@@ -347,8 +347,9 @@ function listenToRadio() {
     delay(2);
     click("听新闻广播");
     delay(2);
-    click("正在收听");
-    console.log("正在收听“中国之声”广播...");
+    //click("正在收听");
+    className("android.support.v7.widget.RecyclerView").findOne().child(2).click();
+    console.log("正在收听广播...");
     delay(2);
     back();//返回电台界面
 }
@@ -424,7 +425,7 @@ function main() {
         // }else{
         className("RelativeLayout").findOnce().child(0).child(0).child(0).child(0).child(2).child(1).click();//为了兼容打包版，js版不用这么丑
         //}
-        delay(2);
+        delay(2); 
         if (!text("积分明细").exists()) {
             console.log("未找到我的积分！");
         }
