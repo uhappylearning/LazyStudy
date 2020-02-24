@@ -361,15 +361,9 @@ function listenToRadio() {
 function start_app() {
     console.setPosition(0, parseInt(device.height * 0.45));//部分华为手机console有bug请注释本行
     console.show();//部分华为手机console有bug请注释本行
-    console.log("正在启动app...");
-    if (!launchApp("学习强国"))//启动学习强国app
-    {
-        console.error("找不到学习强国App!");
-        return;
-    }
     while (!desc("学习").exists()) {
-        console.log("正在等待加载出主页");
-        delay(1);
+        console.log("请打开强国app");
+        delay(1);        
     }
     delay(1);
 }
@@ -398,14 +392,20 @@ function openLocalChannel() {
 //获取每日积分
 function getScores() {
     let _myScores = {};
-    if (text("积分明细").exists()) {
-        className("android.widget.ListView").findOnce().children().forEach(item => {
-            let name = item.child(0).child(0).desc();
-            let str = item.child(2).desc().split("/");
-            let score = str[0].match(/[0-9][0-9]*/g);
-            let value = str[1].match(/[0-9][0-9]*/g);
-            _myScores[name] = Array(score, value);
-        });
+    let err = false;
+    while (!err) {
+        try {
+            className("android.widget.ListView").findOnce().children().forEach(item => {
+                let name = item.child(0).child(0).desc();
+                let str = item.child(2).desc().split("/");
+                let score = str[0].match(/[0-9][0-9]*/g);
+                let value = str[1].match(/[0-9][0-9]*/g);
+                _myScores[name] = Array(score, value);
+            });
+            err=true;
+        } catch (e) {
+            console.log(e);
+        }
     }
     return _myScores;
 }
@@ -415,22 +415,22 @@ function main() {
     start_app();//启动app
     var start = new Date().getTime();//程序开始时间
     var myScores = null;
-    console.log("开始点击 我的积分");
-    do {
-        // if(id("comm_head_xuexi_score").exists()){
-        //     id("comm_head_xuexi_score").findOnce().click();//点击我的积分
-        // }else if(text("积分").exists()){
-        //     text("积分").findOnce().click();
-        // }else{
-        className("RelativeLayout").findOnce().child(0).child(0).child(0).child(0).child(2).child(1).click();//为了兼容打包版，js版不用这么丑
-        //}
-        delay(2); 
-        if (!text("积分明细").exists()) {
-            console.log("未找到我的积分！");
+    while (!text("积分明细").exists()) {
+        console.log("开始点击 我的积分");
+        if (id("comm_head_xuexi_score").exists()) {
+            //console.log("found id=comm_head_xuexi_score");
+            id("comm_head_xuexi_score").findOnce().click();
+        } else if (text("积分").exists()) {
+            //console.log("found 积分");
+            text("积分").findOnce().parent().child(1).click();
+        } else if (className("RelativeLayout").exists()) {
+            //console.log("found RelativeLayout");
+            className("RelativeLayout").findOnce().child(0).child(0).child(0).child(0).child(2).child(1).click();//为了兼容打包版，js版不用这么丑
         }
-        delay(2);
-    } while (!text("积分明细").exists());
+        delay(3);
+    }
     myScores = getScores();
+    delay(1);
     back();//返回主界面
     delay(3);
     if (myScores["本地频道"][0].toString() == "0") {//本地频道分未得
