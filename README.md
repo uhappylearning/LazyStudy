@@ -1,9 +1,8 @@
 # 懒人学习
-# LazyStudy 基于Auto.js的学习强国自动化点击脚本
+# LazyStudy 基于Auto.js的强国自动化点击脚本
 利用手机无障碍功能的一款自动化点击脚本，支持看文章、视频、收藏分享转发、挑战答题。
 
 一款基于auto.js，安卓自动学习脚本，支持看文章视频、收藏分享评论、挑战答题和其他答题。
-[release下载](https://github.com/lgpersonal/LazyStudy/releases/download/1.0/LazyStudy_v1.0.0.apk)
 
 [release下载](https://github.com/lgpersonal/LazyStudy/releases/)
 
