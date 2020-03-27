@@ -23,6 +23,7 @@ function getTimuArray() {
                         //log(blankNumStr);
                         timuArray.push(blankNumStr);
                         findBlank = false;
+                        blankCount=0;
                     }
                     //log(item.desc());
                     timuArray.push(item.desc());
@@ -117,7 +118,8 @@ function clickByAnswer(answer) {
 
 function checkAndSql(timuStr, ansTiku, answer) {
     if (desc("下一题").exists() || desc("完成").exists()) {
-        swipe(100, device.height - 100, 100, 100, 500);
+        //swipe(100, device.height - 100, 100, 100, 500);
+        className("android.webkit.WebView").findOnce().child(2).child(0).scrollDown();
         var nCout = 0
         while (nCout < 10) {
             if (descStartsWith("正确答案").exists()) {
@@ -150,27 +152,31 @@ function checkAndSql(timuStr, ansTiku, answer) {
 }
 
 function clickBtn() {
+    var webkitView=className("android.webkit.WebView").findOnce();
+    if(webkitView.childCount>2 && webkitView.child(2).desc()!=""){
+        webkitView.child(1).click();
+        return;
+    }
     if (desc("再来一组").exists()) {
         desc("再来一组").findOnce().click();
         return;
     }
-
-    if (desc("完成").exists()) {
-        desc("完成").findOnce().click();
-        return;
-    }
-    if (desc("下一题").exists()) {
-        desc("下一题").findOnce().click();
-        return;
-    }
+    // if (desc("完成").exists()) {
+    //     desc("完成").findOnce().click();
+    //     return;
+    // }
+    // if (desc("下一题").exists()) {
+    //     desc("下一题").findOnce().click();
+    //     return;
+    // }
     click(device.width * 0.85, device.height * 0.06);
 }
 
 function doAnswer() {
     clickBtn();
     sleep(500);
-    clickBtn();
-    sleep(500);
+    // clickBtn();
+    // sleep(500);
     //获得题目数组
     var timuArray = getTimuArray();
     var blankArray = [];
