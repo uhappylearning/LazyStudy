@@ -3,7 +3,8 @@ var tikuCommon = require("./tikuCommon.js");
 
 function getTimuArray() {
     if (descStartsWith("填空题").exists()) {
-        var timuCollections = className("EditText").findOnce().parent();
+        // var timuCollections = className("EditText").findOnce().parent();
+        var timuCollections = className("EditText").findOnce().parent().parent();
     } else { //选择题
         var timuCollections = className("ListView").findOnce().parent().child(1);
     }
@@ -12,26 +13,35 @@ function getTimuArray() {
     if (timuCollections.childCount() == 0) { //是选择题
         timuArray.push(timuCollections.desc());
     } else {  //填空题
-        var findBlank = false;
-        var blankCount = 0;
-        var blankNumStr = "";
         timuCollections.children().forEach(item => {
-            if (item.className() != "android.widget.EditText") {
-                if (item.desc() != "") { //题目段
-                    if (findBlank) {
-                        blankNumStr = "|" + blankCount.toString();
-                        //log(blankNumStr);
-                        timuArray.push(blankNumStr);
-                        findBlank = false;
-                    }
-                    //log(item.desc());
-                    timuArray.push(item.desc());
-                } else {
-                    findBlank = true;
-                    blankCount += 1;
-                }
+            if (item.childCount() == 0) { //题目段
+                timuArray.push(item.desc());
+            } else {
+                var blankNumStr = "|" + (item.childCount() - 1).toString();
+                timuArray.push(blankNumStr);
             }
         });
+
+        // var findBlank = false;
+        // var blankCount = 0;
+        // var blankNumStr = "";
+        // timuCollections.children().forEach(item => {
+        //     if (item.className() != "android.widget.EditText") {
+        //         if (item.desc() != "") { //题目段
+        //             if (findBlank) {
+        //                 blankNumStr = "|" + blankCount.toString();
+        //                 //log(blankNumStr);
+        //                 timuArray.push(blankNumStr);
+        //                 findBlank = false;
+        //             }
+        //             //log(item.desc());
+        //             timuArray.push(item.desc());
+        //         } else {
+        //             findBlank = true;
+        //             blankCount += 1;
+        //         }
+        //     }
+        // });
         //log(timuArray);
     }
     return timuArray;
