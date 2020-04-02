@@ -2,47 +2,46 @@
 var tikuCommon = require("./tikuCommon.js");
 
 function getTimuArray() {
+    var timuArray = [];
     if (descStartsWith("填空题").exists()) {
-        // var timuCollections = className("EditText").findOnce().parent();
         var timuCollections = className("EditText").findOnce().parent().parent();
+        if (timuCollections.childCount() == 1) {//法1
+            timuCollections = className("EditText").findOnce().parent();
+            var findBlank = false;
+            var blankCount = 0;
+            var blankNumStr = "";
+            timuCollections.children().forEach(item => {
+                if (item.className() != "android.widget.EditText") {
+                    if (item.desc() != "") { //题目段
+                        if (findBlank) {
+                            blankNumStr = "|" + blankCount.toString();
+                            //log(blankNumStr);
+                            timuArray.push(blankNumStr);
+                            findBlank = false;
+                        }
+                        //log(item.desc());
+                        timuArray.push(item.desc());
+                    } else {
+                        findBlank = true;
+                        blankCount += 1;
+                    }
+                }
+            });
+            // toastLog("法1" + timuArray);
+        } else {//法2   
+            timuCollections.children().forEach(item => {
+                if (item.childCount() == 0) { //题目段
+                    timuArray.push(item.desc());
+                } else {
+                    var blankNumStr = "|" + (item.childCount() - 1).toString();
+                    timuArray.push(blankNumStr);
+                }
+            });
+            // toastLog("法2" + timuArray);
+        }
     } else { //选择题
         var timuCollections = className("ListView").findOnce().parent().child(1);
-    }
-    var timuArray = [];
-    //var timuCollections = descEndsWith("/5").findOnce().parent().parent().child(1);
-    if (timuCollections.childCount() == 0) { //是选择题
         timuArray.push(timuCollections.desc());
-    } else {  //填空题
-        timuCollections.children().forEach(item => {
-            if (item.childCount() == 0) { //题目段
-                timuArray.push(item.desc());
-            } else {
-                var blankNumStr = "|" + (item.childCount() - 1).toString();
-                timuArray.push(blankNumStr);
-            }
-        });
-
-        // var findBlank = false;
-        // var blankCount = 0;
-        // var blankNumStr = "";
-        // timuCollections.children().forEach(item => {
-        //     if (item.className() != "android.widget.EditText") {
-        //         if (item.desc() != "") { //题目段
-        //             if (findBlank) {
-        //                 blankNumStr = "|" + blankCount.toString();
-        //                 //log(blankNumStr);
-        //                 timuArray.push(blankNumStr);
-        //                 findBlank = false;
-        //             }
-        //             //log(item.desc());
-        //             timuArray.push(item.desc());
-        //         } else {
-        //             findBlank = true;
-        //             blankCount += 1;
-        //         }
-        //     }
-        // });
-        //log(timuArray);
     }
     return timuArray;
 }
@@ -161,8 +160,8 @@ function checkAndSql(timuStr, ansTiku, answer) {
 }
 
 function clickBtn() {
-    var webkitView=className("android.webkit.WebView").findOnce();
-    if(webkitView.childCount>2 && webkitView.child(2).desc()!=""){
+    var webkitView = className("android.webkit.WebView").findOnce();
+    if (webkitView.childCount > 2 && webkitView.child(2).desc() != "") {
         webkitView.child(1).click();
         return;
     }
