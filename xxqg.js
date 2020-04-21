@@ -14,11 +14,11 @@ var aTime = 90;//每篇文章学习-90秒 90*8=720秒=12分钟
 var vTime = 15;//每个小视频学习-15秒
 var rTime = 1080;//广播收听-18分钟
 
-var commentText = ["支持党，支持国家！", "为实现中华民族伟大复兴而不懈奋斗！", "紧跟党走，毫不动摇！", "不忘初心，牢记使命", "努力奋斗，报效祖国！"];//评论内容，可自行修改，大于5个字便计分
+var commentText = ["坚定信念听党话,毫不动摇跟党走", "墙裂支持党支持国家！", "墙裂为实现中华民族伟大复兴不懈奋斗！", "墙裂紧跟党走毫不动摇！", "墙裂不忘初心牢记使命", "墙裂努力奋斗报效祖国！"];//评论内容，可自行修改，大于5个字便计分
 var aCatlog = "推荐"//文章学习类别
 
-var lCount = 3;//挑战答题轮数
-var qCount = 5;//挑战答题每轮答题数
+var lCount = 2;//挑战答题轮数
+var qCount = 15;//挑战答题每轮答题数
 //var dlCount=3;//每日答题轮数
 
 /**
@@ -27,7 +27,7 @@ var qCount = 5;//挑战答题每轮答题数
  * @return: null
  */
 function delay(seconds) {
-    sleep(1000 * seconds);//sleep函数参数单位为毫秒所以乘1000
+    sleep(1100 * seconds);//sleep函数参数单位为毫秒所以乘1000
 }
 
 /**
@@ -376,14 +376,14 @@ function start_app() {
  */
 function openLocalChannel() {
     console.log("开始点击 本地频道");
-    if (text("新思想").exists()) {
-        text("新思想").findOne().parent().parent().child(3).click();
+    if (text("北京").exists()) {
+        text("北京学习平台").findOne().parent().parent().child(3).click();
         delay(3);
         className("android.support.v7.widget.RecyclerView").findOne().child(2).click();
         delay(2);
         console.log("返回主界面");
         back();
-        text("新思想").findOne().parent().parent().child(0).click();
+        text("北京学习平台").findOne().parent().parent().child(1).click();
     } else {
         console.log("请手动点击 本地频道");
     }
