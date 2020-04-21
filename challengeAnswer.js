@@ -1,5 +1,16 @@
 var tikuCommon = require("./tikuCommon.js");
 
+function challengeQuestion()
+{
+    text("我的").click();
+    while(!textContains("我要答题").exists());
+    delay(1);
+    click("我要答题");
+}
+
+
+
+
 //显示对号悬浮窗
 function drawfloaty(x, y) {
     //floaty.closeAll();
