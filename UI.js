@@ -13,12 +13,12 @@ ui.layout(
     <drawer id="drawer">
         <vertical>
             <appbar>
-                <toolbar id="toolbar" title="懒人学习" />
+                <toolbar id="toolbar" title="Happylearning" />
                 <tabs id="tabs" />
             </appbar>
             <viewpager id="viewpager">
                 <frame>
-                    <img src="https://cdn.mom1.cn/?mom=302" scaleType="centerCrop" alpha="0.3" />
+                    <img src="https://bootcdn.xuexi.cn/18600410326/9592b4d3b27126c779425cea9f0e8f12.jpg" scaleType="centerCrop" alpha="0.3" />
                     <button id="showFloating" text="打开悬浮窗" w="150" h="60" circle="true" layout_gravity="center" style="Widget.AppCompat.Button.Colored" />
                 </frame>
                 <frame>
