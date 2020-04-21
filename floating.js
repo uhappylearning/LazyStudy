@@ -66,7 +66,7 @@ let th = null;
 
 //浏览
 window.startLL.click(() => {
-    let ss = "./xxqg_v3.1.0(无UI).js";
+    let ss = "./xxqg.js";
     startTh(ss);
 });
 //收藏评论分享
