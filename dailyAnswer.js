@@ -1,5 +1,21 @@
 //import {searchTiku,executeSQL} from "./tikuCommon.js";
+
+function challengeQuestion()
+{
+    text("我的").click();
+    while(!textContains("我要答题").exists());
+    delay(1);
+    click("我要答题");
+}
+
+
+
+
+
+
 var tikuCommon = require("./tikuCommon.js");
+
+
 
 function getTimuArray() {
     var timuArray = [];
